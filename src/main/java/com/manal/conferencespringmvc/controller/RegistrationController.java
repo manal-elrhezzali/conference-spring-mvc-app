@@ -20,6 +20,9 @@ public class RegistrationController {
   //and now we have our object bound by our model to this ModelAttribute
   public String addRegistration(@ModelAttribute ("registration")Registration registration) {
     System.out.println("Registration : " + registration.getName());
-    return "registration";
+    //adding redirect will tell the ViewResolver to go ahead and do a complete redirect and
+    // a GET back to registration and it will clear that form out for us
+    // you can still back up but it will be a new separate POST
+    return "redirect:registration";
   }
 }

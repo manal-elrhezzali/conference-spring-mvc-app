@@ -13,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 
 @Configuration
@@ -62,6 +63,16 @@ public class ConferenceConfig implements WebMvcConfigurer {
     templateResolver.setPrefix("/WEB-INF/views/");
     templateResolver.setSuffix(".html");
     return templateResolver;
+  }
+
+  @Bean
+  public SpringTemplateEngine templateEngine() {
+    SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+    templateEngine.setTemplateResolver(templateResolver());
+    //enabling the SpEL compiler, so we can use the shorthand syntax
+    // of accessing Spring variables and passing them in
+    templateEngine.setEnableSpringELCompiler(true);
+    return templateEngine;
   }
 
 }

@@ -34,6 +34,8 @@ public class RegistrationController {
     //adding redirect will tell the ViewResolver to go ahead and do a complete redirect and
     // a GET back to registration and it will clear that form out for us
     // you can still back up but it will be a new separate POST
+
+    //this string that we return refers to our JSP page with our InternalResourceViewResolver
     return "redirect:registration";
   }
 }

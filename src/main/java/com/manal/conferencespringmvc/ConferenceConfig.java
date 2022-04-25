@@ -15,6 +15,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 @Configuration
 public class ConferenceConfig implements WebMvcConfigurer {
@@ -52,10 +53,22 @@ public class ConferenceConfig implements WebMvcConfigurer {
     InternalResourceViewResolver bean = new InternalResourceViewResolver();
     bean.setPrefix("/WEB-INF/jsp/");
     bean.setSuffix(".jsp");
-    bean.setOrder(0);
+    //changed this to 1, if not it'll look for JSP's name
+    //Now the thymeleafResolver pulls our page up first
+    //N.B: we are breaking the JSP functionality of our app
+    bean.setOrder(1);
     return bean;
   }
 
+  @Bean
+  public ViewResolver thymeleafResolver(){
+    ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+    viewResolver.setTemplateEngine(templateEngine());
+    viewResolver.setOrder(0);
+    return viewResolver;
+  }
+
+ //templateResolver looks up the actual template
   @Bean
   public SpringResourceTemplateResolver templateResolver() {
     SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
